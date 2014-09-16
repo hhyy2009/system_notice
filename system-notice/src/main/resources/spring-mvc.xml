@@ -1,0 +1,35 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<mvc:annotation-driven />
+	<context:annotation-config></context:annotation-config>
+	<context:property-placeholder location="classpath:config.properties"/>
+	<context:component-scan base-package="com.bx.notice.core.web.controller"></context:component-scan>
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+	<mvc:default-servlet-handler/>
+	<!-- 静态资源映射 -->
+	<mvc:resources location="/WEB-INF/static/" mapping="/static/**"/>
+	<!-- 默认的视图解析器 -->
+	<bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="1">
+  		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" /> 
+  		<property name="contentType" value="text/html" /> 
+  		<property name="prefix" value="/WEB-INF/pages/" /> 
+  		<property name="suffix" value=".jsp" /> 
+  	</bean>
+	<!-- 上传拦截，如最大上传值及最小上传值  
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+					// one of the properties available; the maximum file size in bytes 10485760 
+		<property name="maxUploadSize" value="100000" />
+	</bean>
+	-->
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="maxUploadSize" value="10485760000" />
+		<property name="maxInMemorySize" value="40960" />
+	</bean>
+	
+</beans>
